@@ -1,3 +1,4 @@
+using System.Net;
 using CatFactsIntegration.WebApi;
 using CatFactsIntegration.WebApi.Settings;
 using CatFactsIntegration.WebApi.Storage;
@@ -38,6 +39,8 @@ builder.Services.AddScoped<ICatFactsService, CatFactsService>();
 
 builder.Services.AddSingleton<IFileStorage, CatFactsStorage>();
 
+builder.Services.AddProblemDetails();
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 var app = builder.Build();
 
@@ -45,7 +48,34 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
     app.MapScalarApiReference();
+    
+    app.MapGet("/test-exception/{type}", (string type) =>
+    {
+        throw type switch
+        {
+            "unauthorized" => new UnauthorizedAccessException(
+                "Test access denied."),
+
+            "io" => new IOException(
+                "Test file write failure."),
+
+            "external-404" => new HttpRequestException(
+                "Cat fact not found.",
+                inner: null,
+                statusCode: HttpStatusCode.NotFound),
+
+            "external-500" => new HttpRequestException(
+                "External server error.",
+                inner: null,
+                statusCode: HttpStatusCode.InternalServerError),
+
+            _ => new InvalidOperationException(
+                "Test unexpected exception.")
+        };
+    });
 }
+
+app.UseExceptionHandler();
 
 app.UseHttpsRedirection();
 

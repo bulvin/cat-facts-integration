@@ -39,14 +39,6 @@ public sealed class CatFactsStorage : IFileStorage
             var json = JsonSerializer.Serialize(catFact, _jsonOptions);
             await writer.WriteLineAsync(json.AsMemory(), ct);
         }
-        catch (UnauthorizedAccessException ex)
-        {
-            Console.WriteLine("Access Denied: " + ex.Message);
-        }
-        catch (IOException ex)
-        {
-            Console.WriteLine("Disk Error: " + ex.Message);
-        }
         finally
         {
             _semaphoreSlim.Release();
