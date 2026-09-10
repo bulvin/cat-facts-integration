@@ -1,7 +1,6 @@
-using System.Security.Cryptography;
 using CatFactsIntegration.WebApi;
 using CatFactsIntegration.WebApi.Settings;
-using Microsoft.AspNetCore.Mvc;
+using CatFactsIntegration.WebApi.Storage;
 using Microsoft.Extensions.Options;
 using Scalar.AspNetCore;
 
@@ -17,6 +16,14 @@ builder.Services
         "CatFactsApi:BaseUrl must be a valid absolute URL.")
     .ValidateOnStart();
 
+builder.Services
+    .AddOptions<FileStorageSettings>()
+    .Bind(builder.Configuration.GetSection(FileStorageSettings.SectionName))
+    .Validate(
+        options => !string.IsNullOrWhiteSpace(options.Path),
+        "FileStorage:Path is required")
+    .ValidateOnStart();
+
 builder.Services.AddHttpClient<ICatFactsClient, CatFactsClient>((serviceProvider, client) =>
 {
     var options = serviceProvider
@@ -28,6 +35,9 @@ builder.Services.AddHttpClient<ICatFactsClient, CatFactsClient>((serviceProvider
 });
 
 builder.Services.AddScoped<ICatFactsService, CatFactsService>();
+
+builder.Services.AddSingleton<IFileStorage, CatFactsStorage>();
+
 
 var app = builder.Build();
 
@@ -43,7 +53,6 @@ app.MapGet("/", () => "Hello World!");
 
 app.MapGet("/fact", async (ICatFactsService service, CancellationToken ct) =>
 {
-    
     var response = await service.GetAndStoreAsync(ct);
     return Results.Ok(response);
 });
