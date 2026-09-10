@@ -1,0 +1,6 @@
+@CatFactsIntegration.WebApi_HostAddress = localhost:5280
+
+GET localhost:5280/
+Accept: application/json
+
+###
