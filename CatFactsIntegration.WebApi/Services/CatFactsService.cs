@@ -1,10 +1,12 @@
+using CatFactsIntegration.WebApi.Common;
 using CatFactsIntegration.WebApi.Storage;
 
-namespace CatFactsIntegration.WebApi;
+namespace CatFactsIntegration.WebApi.Services;
 
 public interface ICatFactsService
 {
     Task<CatFact> GetAndStoreAsync(CancellationToken ct = default);
+    Task<PagedResult<CatFact>> GetPagedAsync(int page, int limit, string? phrase = null, CancellationToken ct = default);
 }
 
 public sealed class CatFactsService : ICatFactsService
@@ -24,5 +26,10 @@ public sealed class CatFactsService : ICatFactsService
         await _storage.AppendAsync(catFact, ct);
 
         return catFact;
+    }
+    
+    public Task<PagedResult<CatFact>> GetPagedAsync(int page, int limit, string? phrase, CancellationToken ct = default)
+    {
+        return _storage.GetPagedAsync(phrase, page, limit, ct);
     }
 }

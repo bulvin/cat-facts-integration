@@ -1,7 +1,6 @@
 using System.Net;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 
 namespace CatFactsIntegration.WebApi;
 
@@ -38,11 +37,12 @@ public sealed class GlobalExceptionHandler(IProblemDetailsService problemDetails
 
     private static (int StatusCode, string Title) MapException(Exception exception) => exception switch
     {
+        BadHttpRequestException => (StatusCodes.Status400BadRequest, "Invalid Request"),
         UnauthorizedAccessException => (StatusCodes.Status401Unauthorized, "Access denied"),
-        IOException => (StatusCodes.Status500InternalServerError, "Disk error"),
         HttpRequestException { StatusCode: HttpStatusCode.NotFound } => (StatusCodes.Status404NotFound,
             "External resource not found"),
         HttpRequestException => (StatusCodes.Status502BadGateway, "External cat facts service error"),
+        IOException => (StatusCodes.Status500InternalServerError, "Disk error"),
         _ => (StatusCodes.Status500InternalServerError, "Unexpected error")
     };
     

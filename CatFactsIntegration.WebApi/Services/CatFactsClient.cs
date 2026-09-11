@@ -1,4 +1,4 @@
-namespace CatFactsIntegration.WebApi;
+namespace CatFactsIntegration.WebApi.Services;
 
 public interface ICatFactsClient
 {
