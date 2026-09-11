@@ -48,11 +48,7 @@ public sealed class CatFactsStorage : IFileStorage
         }
     }
     
-    public async Task<PagedResult<CatFact>> GetPagedAsync(
-        string? phrase,
-        int page,
-        int limit,
-        CancellationToken ct = default)
+    public async Task<PagedResult<CatFact>> GetPagedAsync(string? phrase, int page, int limit, CancellationToken ct = default)
     {
         await _semaphoreSlim.WaitAsync(ct);
 

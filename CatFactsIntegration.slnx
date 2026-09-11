@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="CatFactsIntegration.Tests/CatFactsIntegration.Tests.csproj" />
   <Project Path="CatFactsIntegration.WebApi/CatFactsIntegration.WebApi.csproj" />
 </Solution>

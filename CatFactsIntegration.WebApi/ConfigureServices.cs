@@ -21,7 +21,7 @@ public static class ConfigureServices
                     options.BaseUrl,
                     UriKind.Absolute,
                     out _),
-                "CatFacts:BaseUrl must be a valid absolute URL.")
+                "CatFactsApi:BaseUrl must be a valid absolute URL.")
             .ValidateOnStart();
 
         services
@@ -32,16 +32,15 @@ public static class ConfigureServices
                 "FileStorage:Path is required.")
             .ValidateOnStart();
 
-        services.AddHttpClient<ICatFactsClient, CatFactsClient>(
-            (serviceProvider, client) =>
-            {
-                var settings = serviceProvider
+        services.AddHttpClient<ICatFactsClient, CatFactsClient>((serviceProvider, client) =>
+        {
+            var settings = serviceProvider
                     .GetRequiredService<IOptions<CatFactsSettings>>()
                     .Value;
 
-                client.BaseAddress = new Uri(settings.BaseUrl);
-                client.DefaultRequestHeaders.Add("Accept", "application/json");
-            });
+            client.BaseAddress = new Uri(settings.BaseUrl);
+            client.DefaultRequestHeaders.Add("Accept", "application/json");
+        });
 
         services.AddScoped<ICatFactsService, CatFactsService>();
         services.AddSingleton<IFileStorage, CatFactsStorage>();
