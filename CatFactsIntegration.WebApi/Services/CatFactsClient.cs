@@ -23,7 +23,7 @@ public sealed class CatFactsClient : ICatFactsClient
         response.EnsureSuccessStatusCode();
         
         var catFact = await response.Content.ReadFromJsonAsync<CatFact>(ct)
-                      ?? throw new InvalidOperationException($"Cannot deserialize catFact from API response: {response.Content}");
+                      ?? throw new InvalidOperationException($"Cannot deserialize CatFact from API response");
        
         return catFact;
     }

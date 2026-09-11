@@ -25,7 +25,7 @@ public static class CatFactsEndpoint
 
     private static async Task<IResult> GetCatFacts(
         [AsParameters] GetCatFactsRequest request,
-        ICatFactsService storage,
+        ICatFactsService service,
         CancellationToken ct)
     {
         var (page, limit, phrase) = request;
@@ -39,7 +39,7 @@ public static class CatFactsEndpoint
             limit = 100;
         }
     
-        var response = await storage.GetPagedAsync(page, limit, phrase?.Trim(), ct);
+        var response = await service.GetPagedAsync(page, limit, phrase?.Trim(), ct);
         return TypedResults.Ok(response);
     }
 
