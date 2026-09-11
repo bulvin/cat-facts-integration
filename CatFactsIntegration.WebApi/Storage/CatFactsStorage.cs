@@ -1,5 +1,6 @@
 using System.Text.Json;
 using CatFactsIntegration.WebApi.Common;
+using CatFactsIntegration.WebApi.Domain;
 using CatFactsIntegration.WebApi.Settings;
 using Microsoft.Extensions.Options;
 

@@ -1,4 +1,5 @@
 using CatFactsIntegration.WebApi.Common;
+using CatFactsIntegration.WebApi.Domain;
 using CatFactsIntegration.WebApi.Storage;
 
 namespace CatFactsIntegration.WebApi.Services;

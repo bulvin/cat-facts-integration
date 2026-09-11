@@ -1,6 +1,7 @@
 using System.Net;
 using CatFactsIntegration.WebApi;
 using CatFactsIntegration.WebApi.Common;
+using CatFactsIntegration.WebApi.Endpoints;
 using CatFactsIntegration.WebApi.Services;
 using CatFactsIntegration.WebApi.Settings;
 using CatFactsIntegration.WebApi.Storage;
@@ -82,33 +83,6 @@ app.UseExceptionHandler();
 
 app.UseHttpsRedirection();
 
-app.MapGet("/", () => "Hello World!");
-
-app.MapGet("/fact", async (ICatFactsService service, CancellationToken ct) =>
-{
-    var response = await service.GetAndStoreAsync(ct);
-    return Results.Ok(response);
-});
-
-app.MapGet("/facts", async (
-    ICatFactsService storage,
-    CancellationToken ct,
-    [AsParameters] GetCatFactsRequest request
-    ) =>
-{
-    var (page, limit, phrase) = request;
-    if (request.Page < 1)
-    {
-        page = 1;
-    }
-
-    if (limit is < 1 or > 100)
-    {
-        limit = 100;
-    }
-    
-    var response = await storage.GetPagedAsync(page, limit, phrase?.Trim(), ct);
-    return Results.Ok(response);
-});
+app.MapCatFactsEndpoints();
 
 app.Run();

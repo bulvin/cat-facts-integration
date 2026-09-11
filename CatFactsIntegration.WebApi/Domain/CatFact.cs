@@ -1,3 +1,3 @@
-namespace CatFactsIntegration.WebApi;
+namespace CatFactsIntegration.WebApi.Domain;
 
 public record CatFact(string Fact, int Length);

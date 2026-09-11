@@ -1,3 +1,5 @@
+using CatFactsIntegration.WebApi.Domain;
+
 namespace CatFactsIntegration.WebApi.Services;
 
 public interface ICatFactsClient
