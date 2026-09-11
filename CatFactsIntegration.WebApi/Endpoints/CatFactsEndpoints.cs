@@ -3,7 +3,7 @@ using CatFactsIntegration.WebApi.Services;
 
 namespace CatFactsIntegration.WebApi.Endpoints;
 
-public static class CatFactsEndpoint
+public static class CatFactsEndpoints
 {
     public static IEndpointRouteBuilder MapCatFactsEndpoints(
         this IEndpointRouteBuilder endpoints)
