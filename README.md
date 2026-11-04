@@ -1,16 +1,16 @@
 # Cat Facts Integration
 
-Aplikacja Web API napisana w .NET, która pobiera ciekawostki o kotach z zewnętrznego API, zapisuje je lokalnie w pliku <code>Data/cat-facts.txt</code> oraz umożliwia ich wyszukiwanie i paginację.
+A .NET Web API application that retrieves cat facts from an external API, saves them locally in <code>Data/cat-facts.txt</code>, and supports searching and pagination.
 
-## Funkcjonalności
+## Features
 
-* pobieranie ciekawostek z zewnętrznego API,
-* zapisywanie danych w pliku tekstowym w formacie JSON,
-* prosta paginacja wyników
-* wyszukiwanie po fragmencie tekstu
-* globalna obsługa wyjątków
+* Fetching cat facts from an external API
+* Saving data to a text file in JSON format
+* Simple result pagination
+* Searching by partial text matches
+* Global exception handling
 
-## Technologie
+## Technologies
 
 * .NET 10
 * ASP.NET Minimal API
@@ -18,29 +18,27 @@ Aplikacja Web API napisana w .NET, która pobiera ciekawostki o kotach z zewnęt
 * NSubstitute
 * OpenAPI, Scalar
 
-#
+## Running the Application
 
-## Uruchomienie
-
-Przywróć zależności:
+Restore dependencies:
 
 ```bash
 dotnet restore
 ```
 
-Uruchom aplikację:
+Run the application:
 
 ```bash
 dotnet run --project CatFactsIntegration.WebApi
 ```
 
-Dokumentacja Scalar jest dostępna w środowisku deweloperskim pod adresem:
+Scalar documentation is available in the development environment at:
 
 ```text
 /scalar/v1
 ```
 
-## Przykłady
+## Examples
 http://localhost:5280/fact
 
 <img width="680" height="152" alt="image" src="https://github.com/user-attachments/assets/8cf6f1ca-0b54-41e0-a5d2-ef1419e67979" />
@@ -50,9 +48,9 @@ http://localhost:5280/facts?page=1&limit=2&phrase=cat
 <img width="1240" height="242" alt="image" src="https://github.com/user-attachments/assets/17d192a6-672d-4b6f-9e1b-ee323147ff35" />
 
 
-## Testy
+## Tests
 
-Uruchomienie wszystkich testów:
+Run all tests:
 
 ```bash
 dotnet test
